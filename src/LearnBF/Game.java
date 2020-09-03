@@ -27,9 +27,30 @@ public class Game {
         }
     }
 
-    public String expressionDraw(){
-        int random = (int) (Math.random()*listOfMovies.size())+1;
-        System.out.println(listOfMovies.get(random));
-        return listOfMovies.get(random);
+    public String expressionDraw() {
+        int random = (int) (Math.random() * listOfMovies.size());
+        String randomMovie = listOfMovies.get(random);
+//        System.out.println(randomMovie);
+        return randomMovie;
     }
+
+
+    public void changeToUnderscore() {
+        String s = expressionDraw();
+        System.out.println(s);
+        char[] sAsArray = s.toCharArray();
+//        System.out.println(s.toString() + "  " + sAsArray.length);
+        char[] underscore = new char[sAsArray.length];
+        for (int i = 0; i < sAsArray.length; i++) {
+            if (sAsArray[i] == ' ') {
+                underscore[i] = ' ';
+            } else {
+                underscore[i] = '_';
+            }
+        }
+        System.out.println(underscore);
+
+    }
+
+
 }

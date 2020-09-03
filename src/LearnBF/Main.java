@@ -5,8 +5,9 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) {
-	Game game = new Game();
-	game.readFiles();
-	game.expressionDraw();
-    }
+		Game game = new Game();
+		game.readFiles();
+		game.expressionDraw();
+		game.changeToUnderscore();
+	}
 }
