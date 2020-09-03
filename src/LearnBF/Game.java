@@ -26,4 +26,10 @@ public class Game {
             listOfMovies.add(line);
         }
     }
+
+    public String expressionDraw(){
+        int random = (int) (Math.random()*listOfMovies.size())+1;
+        System.out.println(listOfMovies.get(random));
+        return listOfMovies.get(random);
+    }
 }
