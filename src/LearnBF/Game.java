@@ -9,8 +9,9 @@ import java.util.Scanner;
 public class Game {
 
     File file = new File("files/movies.txt");
-    Scanner fileScanner;
     List<String> listOfMovies = new ArrayList<>();
+    Scanner fileScanner;
+    Scanner keybordScanner = new Scanner(System.in);
 
     {
         try {
@@ -34,8 +35,7 @@ public class Game {
         return randomMovie;
     }
 
-
-    public void changeToUnderscore() {
+    public char[] changeToUnderscore() {
         String s = expressionDraw();
         System.out.println(s);
         char[] sAsArray = s.toCharArray();
@@ -49,7 +49,25 @@ public class Game {
             }
         }
         System.out.println(underscore);
+        return underscore;
 
+    }
+
+    public void guessLetter() {
+        char[] charsToGuess = changeToUnderscore();
+        String rightAnswer = expressionDraw();
+        int chances =10;
+        do {
+            String guess = keybordScanner.nextLine();
+            char guessChar = guess.charAt(0);
+
+            chances--;
+            if (chances ==0){
+                System.out.println("Unfortunately you lose. Try again!");
+            }
+        } while (chances>0);
+
+        
     }
 
 
