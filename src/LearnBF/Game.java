@@ -9,14 +9,20 @@ import java.util.Scanner;
 public class Game {
 
     String randomMovie;
+    char[] expressionAsArray;
     private List<String> fullList;
     File file = new File("files/movies.txt");
     Scanner fileScanner;
+    Scanner inputScanner;
     List<String> listOfMovies = new ArrayList<>();
+    char[] underscoreArray;
 
-    public Game(){
-        fullList=readFiles();
-        randomMovie=expressionDraw();
+
+    public Game() {
+        fullList = readFiles();
+        randomMovie = expressionDraw();
+        expressionAsArray = randomMovie.toCharArray();
+        underscoreArray = changeExpressionToUnderscore();
     }
 
     {
@@ -42,21 +48,65 @@ public class Game {
     }
 
 
-    public void changeToUnderscore() {
-        String s = randomMovie;
-        System.out.println(s);
-        char[] sAsArray = s.toCharArray();
-        char[] underscore = new char[sAsArray.length];
-        for (int i = 0; i < sAsArray.length; i++) {
-            if (sAsArray[i] == ' ') {
-                underscore[i] = ' ';
-            } else {
-                underscore[i] = '_';
-            }
-        }
-        System.out.println(underscore);
+    public char[] changeExpressionToUnderscore() {
+//        System.out.println(randomMovie);
 
+        char[] underscoreArray = new char[expressionAsArray.length];
+        for (int i = 0; i < expressionAsArray.length; i++) {
+            if (expressionAsArray[i] == ' ' || expressionAsArray[i] == '\'') {
+                underscoreArray[i] = ' ';
+            } else {
+                underscoreArray[i] = '_';
+            }
+
+        }
+        return underscoreArray;
     }
 
 
+    public void guessLetterLoop() {
+
+        int chances = 0;
+        boolean correctAnswer = false;
+        String workingNameOfMovie = randomMovie;
+        do {
+            System.out.print("\nYou are guessing:");
+            System.out.print(underscoreArray);
+            System.out.print("\nYou have guessed (" + chances + ") wrong letters:\nGuess a letter: ");
+            inputScanner = new Scanner(System.in);
+            String guess = inputScanner.nextLine();
+            char[] guessAsChar = guess.toCharArray();
+
+            if (!(workingNameOfMovie.contains(guess))) {
+                chances++;
+            } else {
+                while (workingNameOfMovie.contains(guess)) {
+                    int indexOfLetter = workingNameOfMovie.indexOf(guess);
+                    underscoreArray[indexOfLetter] = guessAsChar[0];
+                    workingNameOfMovie = workingNameOfMovie.replaceFirst(guess, " ");
+
+                    for (int index = 0; index <= underscoreArray.length-1; index++) {
+//                        System.out.println(underscoreArray);
+                        if (underscoreArray[index] == '_') {
+                            break;
+                        }
+                        else if (underscoreArray[index] != '_' && index == underscoreArray.length-1) {
+                            correctAnswer=true;
+                            System.out.println("\nYou Win!!! Congratulation! \nThe right answer is: "+randomMovie.toUpperCase());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (chances == 10) {
+                System.out.println("\nYou Lose! Try again!");
+                break;
+            }
+            if (correctAnswer) break;
+        }
+        while (chances < 11);
+    }
 }
+
+
